@@ -1,4 +1,4 @@
-var backend = "https://crudcrud.com/api/72a78ab259e24dd7bbba5a9e727c6d22";
+var backend = "https://crudcrud.com/api/7b6dde5dfbd54d319d56d8fe962361ab";
 var medicos = new Array();
 let horarios = new Array();
 var medico = {cedula: "", nombre: "", contrasena: "", especialidad: "", costo: 0, zona: "", horario: horarios };
@@ -36,13 +36,14 @@ function loadMedicoLocalStorage(){
 function loadMedicoFromList(){
     var medSearch = false;
     medicos.forEach(function(m){
-        console.log(m.cedula +"-"+id);
+        //si la cedula del medico del array[n] es igual al id insertado en el campo de login (id) entonces...
         if(m.cedula === id){
+            //inserto ese medico en el objeto
             medico = m;
             medSearch = true;
         }
     });
-    //console.log(medSearch);
+    //retorna true si se encontro un medico con el id del campo
     return medSearch;
 }
 

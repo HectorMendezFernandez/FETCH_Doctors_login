@@ -1,4 +1,4 @@
-var backend = "https://crudcrud.com/api/72a78ab259e24dd7bbba5a9e727c6d22";
+var backend = "https://crudcrud.com/api/7b6dde5dfbd54d319d56d8fe962361ab";
 var medicos = new Array();
 let horarios = new Array();
 var horario = { dia:"", horaInicio:"", horaFinal:""};
