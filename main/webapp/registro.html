@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>  
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+        <link href="css/registro.css" rel="stylesheet">
+        <title>Registro Medicos</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="js/registro.js"> </script> 
+    </head>
+    <body>
+        <div class="container d-flex">
+            <div class="col-md-6 col-sm-12 border shadow-lg p-3 mb-5 bg-body rounded" style="margin-left: 13em; margin-top: 2em; max-height: 600px;">
+                <div class="login-form">
+                    <form>
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label>ID Medico</label>
+                            <input id="idMed" type="text" class="form-control" placeholder="Nombre">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label>Password</label>
+                            <input id="passMed" type="password" class="form-control" placeholder="password">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label>Nombre Medico</label>
+                            <input id="nombreMed" type="text" class="form-control" placeholder="Nombre Medico">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label>Especialidad</label>
+                            <input id="especMed" type="text" class="form-control" placeholder="Especialidad">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label>Costo</label>
+                            <input id="costoConsulMed" type="number" class="form-control" placeholder="Costo Consulta">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 20px;">
+                            <label>Zona Medico</label>
+                            <input id="zonaMed" type="text" class="form-control" placeholder="Zona Medico">
+                        </div>
+                        <button type="submit" id="horarioBtn" class="btn btn-black">Horario</button>
+                        <button type="submit" id="registrarBtn" class="btn btn-secondary">Registrar</button>
+                    </form>
+                </div>
+            </div>
+              <button type="submit" id="regresarBtn" class="btn btn-primary ml-5" style = "max-height: 38px; margin-top: 555px;">Regresar</button>
+        </div>
+        
+        <!--overly-->    
+        <div id="overlay" class="overlay"></div>    
+
+        <!--popup-->
+        <div id="popup" class='popup' style="width: 650px; left: 25%;">
+            <div class='col-12'>
+                <div>
+                    <form name="formulario">
+                        <div class='container' id="horarioContainer">
+                            <!--checkbox-->
+                            <div class="form-check form-check-inline" style="margin-right: 53px;">
+                                <input class="form-check-input" type="checkbox" id="monday" value="Lunes">
+                                <label class="form-check-label" for="inlineCheckbox1">Lunes</label>
+                            </div>
+                            
+                            <div class="form-check form-check-inline" style="margin-right: 48px;">
+                                <input class="form-check-input" type="checkbox" id="thuesday" value="Martes">
+                                <label class="form-check-label" for="inlineCheckbox2">Martes</label>
+                            </div>
+                            
+                            <div class="form-check form-check-inline" style="margin-right: 31px;">
+                                <input class="form-check-input" type="checkbox" id="wednesday" value="Miercoles">
+                                <label class="form-check-label" for="inlineCheckbox1">Miercoles</label>
+                            </div>
+                            
+                            <div class="form-check form-check-inline" style="margin-right: 48px;">
+                                <input class="form-check-input" type="checkbox" id="thursday" value="Jueves">
+                                <label class="form-check-label" for="inlineCheckbox2">Jueves</label>
+                            </div>
+                            
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="friday" value="Viernes">
+                                <label class="form-check-label" for="inlineCheckbox1">Viernes</label> <br>
+                            </div>
+                            
+                            <!--cuadroHorarios-->
+                            <div class="d-flex">
+                                <div id="horarioLunes" style="visibility:hidden;" > 
+                                <input id="mon-sh" type="time" name="horaInicio" value="11:45:00" max="22:30:00" min="10:00:00" step="1">
+                                <input id="mon-fh" type="time" name="horaFinal" value="11:45:00" max="22:30:00" min="10:00:00" step="1">
+                                </div>
+                                
+                                <div id="horarioMartes" style="visibility:hidden;">
+                                    <input id="thues-sh" type="time" name="horaInicio" value="11:45:00" max="22:30:00" min="10:00:00" step="1">
+                                    <input id="thues-fh" type="time" name="horaFinal" value="11:45:00" max="22:30:00" min="10:00:00" step="1">
+                                </div>
+                                
+                                <div id="horarioMiercoles" style="visibility:hidden;">
+                                    <input id="wednes-sh" type="time" name="horaInicio" value="11:45:00" max="22:30:00" min="10:00:00" step="1">
+                                    <input id="wednes-fh" type="time" name="horaFinal" value="11:45:00" max="22:30:00" min="10:00:00" step="1">
+                                </div>
+                                
+                                <div id="horarioJueves" style="visibility:hidden;">
+                                    <input id="thurs-sh" type="time" name="horaInicio" value="11:45:00" max="22:30:00" min="10:00:00" step="1">
+                                    <input id="thurs-fh" type="time" name="horaFinal" value="11:45:00" max="22:30:00" min="10:00:00" step="1">
+                                </div>
+                                
+                                <div id="horarioViernes" style="visibility:hidden;">
+                                    <input id="fri-sh" type="time" name="horaInicio" value="11:45:00" max="22:30:00" min="10:00:00" step="1">
+                                    <input id="fri-fh" type="time" name="horaFinal" value="11:45:00" max="22:30:00" min="10:00:00" step="1">
+                                </div>
+                            </div>
+                            <!--botones-->
+                            <div style = "margin-top: 9.5em;"> 
+                             <input id="regresarPopup" class="boton" type="button" value="Regresar">
+                             <input id="aplicarPopup" class="boton" type="button" value="Aplicar">
+                           </div>
+                        </div>
+                 
+                    </form> 
+                </div>
+            </div>     
+        </div>
+    </body>
+</html>
