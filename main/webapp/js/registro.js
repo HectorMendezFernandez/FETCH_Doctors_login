@@ -1,4 +1,4 @@
-var backend = "https://crudcrud.com/api/7b6dde5dfbd54d319d56d8fe962361ab";
+var backend = "https://crudcrud.com/api/fe5edfc73011470cb750c48825e174af";
 var medicos = new Array();
 let horarios = new Array();
 var horario = { dia:"", horaInicio:"", horaFinal:""};
@@ -42,7 +42,6 @@ function validarDatosRegistros() {
 //me crea el objeto medico con los valores de cada campo
 function loadMedico(){
     reset();
-    console.log("AAAAA "+$("#idMed").val());
     medico.cedula = $("#idMed").val();
     medico.contrasena = document.getElementById("passMed").value;
     medico.nombre = document.getElementById("nombreMed").value;
@@ -72,6 +71,8 @@ function actionRegistrar(event){
     //resetea los objetos
     reset();
     resetHorario();
+    //nos vamos al login
+    document.location = urlLocal+"index.html";
 }
 
 
@@ -142,15 +143,50 @@ function validarLogeo(){
      return medico;
 }
 
+
+function cargarHorario(){
+    let horariosMed = medico.horario;
+    horariosMed.forEach(function (h){
+        switch (h.dia) {
+           case 'Lunes':
+            $("#monday").prop('checked', true);
+            $("#mon-sh").val(h.horaInicio);
+            $("#mon-fh").val(h.horaFinal);
+           break;
+            case 'Martes':
+            $("#thuesday").prop('checked', true);
+            $("#thues-sh").val(h.horaInicio);
+            $("#thues-fh").val(h.horaFinal);
+            break;
+            case 'Miercoles':
+            $("#wednesday").prop('checked', true);
+            $("#wednes-sh").val(h.horaInicio);
+            $("#wednes-fh").val(h.horaFinal);
+            break;
+            case 'Jueves':
+            $("#thursday").prop('checked', true);
+            $("#thurs-sh").val(h.horaInicio);
+            $("#thurs-fh").val(h.horaFinal);
+            break;
+            case 'Viernes':
+            $("#friday").prop('checked', true);
+            $("#fri-sh").val(h.horaInicio);
+            $("#fri-fh").val(h.horaFinal);
+            break;
+        }
+    });
+}
 //Este metodo es para cargar los datos del medico en los campos del formulario 
 //(ESTE METODO SOLO SE USARA SI SE ACCEDIO A LA OPCION DE LOGIN Y EXISTE UN MEDICO EN EL LOCALSTORAGE)
 function cargarDatosMedicoLog(){
     document.getElementById("idMed").value = medico.cedula;
+       $("#idMed").attr("readonly", true);
     document.getElementById("passMed").value =  medico.contrasena;
     document.getElementById("nombreMed").value =  medico.nombre;
     document.getElementById("especMed").value =  medico.especialidad;
     document.getElementById("costoConsulMed").value =  medico.costo;
     document.getElementById("zonaMed").value = medico.zona;
+    cargarHorario();
 }
 
 //metodo que verifica checkbox
@@ -185,24 +221,24 @@ function ocultaCheckBoxs(){
      $("#horarioViernes").prop("style", "visibility:hidden;");
 }
 
-function  insertaHorario(horario){
-    //inserto un horario si el array esta vacio
-    if(horarios.length === 0){
-        horarios.push(horario);
+function  insertaHorario(horario1){
+    //inserto un horario
+    let existe = verificaExistenciaHorario(horario1);
+    if(existe === false){
+        horarios.push(horario1);
     }
-    //si el array no esta vacio busco a ver si existe un horario con ese dia y lo remplazo
-    horarios.forEach(function(h){
-        if(horario.dia === h.dia){
-            h.horaInicio = horario.horaInicio;
-            h.horaFinal = horario.horaFinal;
-        }
-    });    
+     console.log("=================================");
 }
 
-function  verHorarios(horario){
+function  verificaExistenciaHorario(horario1){
     horarios.forEach(function (h) {
-        console.log(h.dia +" - "+h.horaInicio+" - "+h.horaFinal);
-    });   
+        if(h.dia === horario1.dia){
+             h.horaInicio = horario1.horaInicio;
+             h.horaFinal = horario1.horaFinal;
+             return true;
+        }
+    }); 
+    return false;
 }
 //Me devuelve a la pagina de index.html
 function actionRegresar(event){
@@ -230,9 +266,8 @@ function actionAplicarHorario(event){
          horario.dia = $('#monday').val();
          horario.horaInicio = $('#mon-sh').val();
          horario.horaFinal = $('#mon-fh').val();
-         console.log(horarios.includes(horario));
          insertaHorario(horario);
-         verHorarios();
+         horario = {dia: "", horaInicio: "", horaFinal: ""};
      }
      
       if ($('#thuesday').prop('checked') ) {
@@ -240,23 +275,22 @@ function actionAplicarHorario(event){
          horario.horaInicio = $('#thues-sh').val();
          horario.horaFinal = $('#thues-fh').val();
          insertaHorario(horario);
-         verHorarios();
+         horario = {dia: "", horaInicio: "", horaFinal: ""};
      }
-     
       if ($('#wednesday').prop('checked') ) {
          horario.dia = $('#wednesday').val();
          horario.horaInicio = $('#wednes-sh').val();
          horario.horaFinal = $('#wednes-fh').val();
          insertaHorario(horario);
-         verHorarios();
+         horario = {dia: "", horaInicio: "", horaFinal: ""};
      }
      
       if ($('#thursday').prop('checked') ) {
          horario.dia = $('#thursday').val();
          horario.horaInicio = $('#thurs-sh').val();
          horario.horaFinal = $('#thurs-fh').val();
-        insertaHorario(horario);
-        verHorarios();
+         insertaHorario(horario);
+         horario = {dia: "", horaInicio: "", horaFinal: ""};
      }
      
       if ($('#friday').prop('checked') ) {
@@ -264,7 +298,7 @@ function actionAplicarHorario(event){
          horario.horaInicio = $('#fri-sh').val();
          horario.horaFinal = $('#fri-fh').val();
          insertaHorario(horario);
-         verHorarios();
+         horario = {dia: "", horaInicio: "", horaFinal: ""};
      }
      ocultaCheckBoxs();
      actionRegresarPopup(event);
@@ -280,6 +314,7 @@ function actionCheckDia(event){
 function loaded() {
     //si existe un medico en el  local storage es que se accedio desde el boton de login a un medico que estaba en los registros
     //entonces lo que hara es cargar ese objeto medico del localstorage para poder insertar sus datos en los campos del formulario
+    $("#idMed").attr("readonly", false);
     if(validarLogeo() !== null)
         cargarDatosMedicoLog();
     //Se crean los listeners
