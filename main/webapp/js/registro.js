@@ -1,3 +1,7 @@
+// Autor
+// Hector Mendez Fernandez
+//Universidad Nacional
+
 var backend = "https://crudcrud.com/api/fe5edfc73011470cb750c48825e174af";
 var medicos = new Array();
 let horarios = new Array();
@@ -328,3 +332,7 @@ function loaded() {
 
 
 document.addEventListener("DOMContentLoaded", loaded);
+
+// Autor
+// Hector Mendez Fernandez
+//Universidad Nacional
